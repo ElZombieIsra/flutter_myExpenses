@@ -20,6 +20,8 @@ class MyHomeApp extends StatefulWidget{
   _MyHomeApp createState() => new _MyHomeApp();
 }
 class _MyHomeApp extends State<MyHomeApp> {
+  final TextEditingController _textController = new TextEditingController();
+  TextEditingController controller = new TextEditingController(text: "");
   final _gastos = ['asd','asdasddas','asdasd','wow'];
   final _cantidad = [24, 23,555,6654];
   void _click(){
@@ -38,9 +40,14 @@ class _MyHomeApp extends State<MyHomeApp> {
             appBar: new AppBar(
               title: new Text('Agrega un gasto'),
             ),
-            body: new Column(
+            body: new Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const Text('Agrega un gasto'),
+                new Column(
+                  children: <Widget>[
+                    const Text('Agrega un gasto'),
+                  ],
+                ),
               ],
             ),
           );
@@ -52,7 +59,7 @@ class _MyHomeApp extends State<MyHomeApp> {
       appBar: new AppBar(
         title: const Text('Mis gastos'),
         actions: <Widget>[
-          new IconButton(icon: new Icon(Icons.add),onPressed: _addExpense,),
+          new IconButton(icon: new Icon(Icons.add),onPressed: _showDialog,),
         ],
       ),
       body: _buildRows(),
@@ -130,5 +137,76 @@ class _MyHomeApp extends State<MyHomeApp> {
         ),
       );
     }
+  }
+  _showDialog() async {
+    await showDialog<String>(
+      context: context,
+      child: new _SystemPadding(child: new AlertDialog(
+        contentPadding: const EdgeInsets.all(16.0),
+        content: new Column(
+          children: <Widget>[
+            new Row(
+              children: <Widget>[
+                new Container(,
+                  child: new Icon(Icons.attach_money),
+                ),
+                new Flexible(
+                  child: new TextField(
+                    autofocus: true,
+                    decoration: new InputDecoration(
+                        labelText: 'Inserta tu gasto'),
+                  ),
+                ),
+              ],
+            ),
+            new Row(
+              children: <Widget>[
+                new Container(
+
+                ),
+                new Expanded(
+                  child: new TextField(
+                    decoration: new InputDecoration(
+                      labelText: 'Inserta la cantidad',
+                    ),
+                    autocorrect: false,
+                    autofocus: false,
+                    controller: controller,
+                    keyboardType: TextInputType.number,
+                    maxLines: 1,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        actions: <Widget>[
+          new FlatButton(
+              child: const Text('CANCEL'),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          new FlatButton(
+              child: const Text('OPEN'),
+              onPressed: () {
+                Navigator.pop(context);
+              })
+        ],
+      ),),
+    );
+  }
+}
+class _SystemPadding extends StatelessWidget {
+  final Widget child;
+
+  _SystemPadding({Key key, this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var mediaQuery = MediaQuery.of(context);
+    return new AnimatedContainer(
+        padding: mediaQuery.viewInsets,
+        duration: const Duration(milliseconds: 300),
+        child: child);
   }
 }
