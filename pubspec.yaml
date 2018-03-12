@@ -2,6 +2,7 @@ name: my_expenses
 description: A new Flutter project.
 
 dependencies:
+  shared_preferences: ^0.4.0
   flutter:
     sdk: flutter
 
@@ -12,7 +13,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  flutter_launcher_icons: "^0.2.0"
+flutter_icons:
+  image_path: "ico/mg.png" 
+  android: true
+  ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
@@ -24,7 +29,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+  assets: 
+    - img/loadScreenMG.png
+    - ico/mg.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
